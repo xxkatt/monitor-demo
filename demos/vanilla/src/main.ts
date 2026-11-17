@@ -4,7 +4,11 @@ import typescriptLogo from './assets/typescript.svg'
 import viteLogo from './assets/vite.svg'
 import { setupCounter } from './counter.ts'
 import { init } from '@xxkatt/monitor-sdk-browser'
-init({ name: 'xxkatt' })
+const dsn = import.meta.env.VITE_MONITOR_DSN
+if (dsn) {
+  const destroy = init({ dsn })
+  import.meta.hot?.dispose(destroy)
+}
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <section id="center">
